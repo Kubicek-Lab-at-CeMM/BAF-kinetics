@@ -10,11 +10,11 @@ library(lawstat)
 
 ### setting working directory
 
-setwd("/Users/sgrosche/Development/191127-BAF-timecourse-batch3/results/differential_analysis/191206-SMARCA4-timecourse-and-KO-FC-based-3-clusters")
+setwd("data/")
 
 ### reading in data
 
-data <- read.table("191205-FC_p_allclusters_SMARCA4_timecourse_KO_differential_regions.txt",header = T)
+data <- read.table("FC_p_allclusters_SMARCA4_timecourse_KO_differential_regions.txt",header = T)
 
 ### writing N regions
 
@@ -39,7 +39,7 @@ for (element in cluster_vector){
     geom_boxplot()  + ylim(-9,4) + theme_bw() + theme(legend.position = "none",axis.text.x = element_text(angle = 90),panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + scale_colour_npg() + geom_hline(yintercept=0, linetype="dashed", color = "black", size=0.5)
   
   
-  ggsave(paste("200408-boxplot-accessibility-log2FC-SMARCA4-timecourse-KO-",cluster_name,"-wolegend.pdf",sep = ""), plot = p, device = "pdf", path = NULL,
+  ggsave(paste("Boxplot-accessibility-log2FC-SMARCA4-timecourse-KO-",cluster_name,"-wolegend.pdf",sep = ""), plot = p, device = "pdf", path = NULL,
          scale = 1, height= 6, width = 8, dpi = 300, limitsize = TRUE)
   
   
