@@ -10,7 +10,7 @@ library(lawstat)
 
 ### setting working directory
 
-setwd("data/")
+setwd("../data/")
 
 ### reading in data
 

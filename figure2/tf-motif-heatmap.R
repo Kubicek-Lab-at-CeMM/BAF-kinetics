@@ -9,7 +9,7 @@ library(RColorBrewer)
 
 ### setting working directory
 
-setwd("data/")
+setwd("../data/")
 
 ### creating list 
 

@@ -8,9 +8,11 @@ library(scales)
 
 setwd("../data/")
 
-### plots of timecourse data against timecourse regions
+### enrichment enhancer stratified all clusters
 
-clustervector <- c("cluster1","cluster2","cluster3","cluster4","cluster5")
+### plots of timecourse data against all consensus
+
+clustervector <- c("cluster1","cluster2","cluster3","cluster4","cluster5","cluster6","cluster7","cluster8","cluster9","cluster10")
 
 ### making lists
 
@@ -28,7 +30,7 @@ for (element in clustervector){
   
   print(cluster)
   
-  data = read.table(paste("tc_consensus/",cluster,"/col_HAP1_specific.tsv",sep = ""),header = T)
+  data = read.table(paste("all_consensus/",cluster,"/col_HAP1_specific.tsv",sep = ""),header = T)
   
   data_sorted <- data[order(data$filename),]
   
@@ -46,7 +48,7 @@ dataframe_p$feature <- gsub(".bed","",data_sorted$filename)
 
 row.names(dataframe_p) <- dataframe_p$feature
 
-dataframe_p_woBAF <- dataframe_p[c("Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak","TSS","FlankTSS","Transc","TES","Quiesc","PCRepr","Heter","SMARCA4","ARID1A","BAF","Pol2","H3K27ac","BRD4"),]
+dataframe_p_woBAF <- dataframe_p[c("Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak"),]
 
 dataframe_or <- data.frame(list_df_or)
 
@@ -54,7 +56,7 @@ dataframe_or$feature <- gsub(".bed","",data_sorted$filename)
 
 row.names(dataframe_or) <- dataframe_or$feature
 
-dataframe_or_woBAF <- dataframe_or[c("Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak","TSS","FlankTSS","Transc","TES","Quiesc","PCRepr","Heter","SMARCA4","ARID1A","BAF","Pol2","H3K27ac","BRD4"),]
+dataframe_or_woBAF <- dataframe_or[c("Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak"),]
 
 dataframe_p_reshaped <- melt(dataframe_p_woBAF, id="feature")
 
@@ -68,7 +70,7 @@ colnames(dataframe_p_or_reshaped_merge) <- c("feature_p","cluster_p","neg_log10_
 
 ### making plot
 
-dataframe_p_or_reshaped_merge$feature_p <- factor(dataframe_p_or_reshaped_merge$feature_p, levels = c("SMARCA4","ARID1A","BAF","Pol2","BRD4","H3K27ac","Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak","TSS","FlankTSS","Transc","TES","Quiesc","PCRepr","Heter"))
+dataframe_p_or_reshaped_merge$feature_p <- factor(dataframe_p_or_reshaped_merge$feature_p, levels = c("Enh","EnhAct","EnhBiv","EnhGen","EnhSup","EnhWeak"))
 
 dataframe_p_or_reshaped_merge$neg_log10_p_value_new <- ifelse(dataframe_p_or_reshaped_merge$neg_log10_p_value < 1.3, NA,dataframe_p_or_reshaped_merge$neg_log10_p_value)
 
@@ -83,7 +85,7 @@ dotplot = ggplot(dataframe_p_or_reshaped_merge) +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90))
 
-pdf("dotplot-HAP1-enrichment-timecourse-clusters-against-timecourse-regions-deepskyblue.pdf",useDingbats = F) 
+pdf("dotplot-HAP1-enrichment-enhancers-all-clusters-against-all-consensus.pdf",useDingbats = F) 
 print(dotplot)
 dev.off()
 

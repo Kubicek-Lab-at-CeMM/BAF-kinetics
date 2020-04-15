@@ -8,7 +8,7 @@ library(scales)
 
 setwd("../data/")
 
-### plots of timecourse data against timecourse regions
+### plots of timecourse data against all consensus
 
 clustervector <- c("cluster1","cluster2","cluster3","cluster4","cluster5")
 
@@ -21,21 +21,21 @@ list_df_or <- list()
 ### starting loop
 
 for (element in clustervector){
-  
-  ### reading in data
-  
-  cluster = element
-  
-  print(cluster)
-  
-  data = read.table(paste("tc_consensus/",cluster,"/col_HAP1_specific.tsv",sep = ""),header = T)
-  
-  data_sorted <- data[order(data$filename),]
-  
-  list_df_p[[cluster]] = data_sorted$pValueLog
-  
-  list_df_or[[cluster]] = data_sorted$oddsRatio
-  
+
+### reading in data
+
+cluster = element
+
+print(cluster)
+
+data = read.table(paste("all_consensus/",cluster,"/col_HAP1_specific.tsv",sep = ""),header = T)
+
+data_sorted <- data[order(data$filename),]
+
+list_df_p[[cluster]] = data_sorted$pValueLog
+
+list_df_or[[cluster]] = data_sorted$oddsRatio
+
 }
 
 ### making plot table
@@ -83,7 +83,8 @@ dotplot = ggplot(dataframe_p_or_reshaped_merge) +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90))
 
-pdf("dotplot-HAP1-enrichment-timecourse-clusters-against-timecourse-regions-deepskyblue.pdf",useDingbats = F) 
+pdf("dotplot-HAP1-enrichment-timecourse-clusters-against-all-consensus.pdf",useDingbats = F) 
 print(dotplot)
 dev.off()
-
+             
+     

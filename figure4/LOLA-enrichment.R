@@ -10,14 +10,14 @@ setwd("../data/")
 
 ### setting database
 
-dbPath = "../data/LOLA_db/hg_38/"
+dbPath = "LOLA_db/hg_38/"
 regionDB = loadRegionDB(dbPath)
 
 ### analyses consensus
 
 ### Reading in universe set
 
-userUniverse <- readBed("all-clusters-consensus-sorted.bed")
+userUniverse <- readBed("universe-consensus.bed")
 
 ### Making test set LOOP start
 
@@ -28,12 +28,12 @@ for (element in clustervector){
   
   print(element)
   
-  userSets <- readBed(paste("",element,".bed",sep=""))
+  userSets <- readBed(paste("/",element,".bed",sep=""))
   
   ### Running LOLA
   
   locResults = runLOLA(userSets, userUniverse, regionDB, cores=1)
   
-  writeCombinedEnrichment(locResults, outFolder = paste("tc_consensus/",element,"/",sep=""), includeSplits=TRUE)
+  writeCombinedEnrichment(locResults, outFolder = paste("all_consensus/",element,"/",sep=""), includeSplits=TRUE)
   
 }

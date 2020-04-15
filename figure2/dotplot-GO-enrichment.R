@@ -6,7 +6,7 @@ library(scales)
 
 ### setting working directory
 
-setwd("data/")
+setwd("../data/")
 
 ### plots of timecourse data against all consensus
 

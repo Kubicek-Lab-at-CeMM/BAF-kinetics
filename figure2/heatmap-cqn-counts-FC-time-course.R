@@ -9,7 +9,7 @@ library(RColorBrewer)
 
 ### Setting working directory
 
-setwd("data/")
+setwd("../data/")
 
 ### Reading in clusters FC based
 

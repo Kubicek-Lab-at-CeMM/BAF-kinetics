@@ -11,7 +11,7 @@ library(GetoptLong)
 
 ### setting working directory
 
-setwd("data/")
+setwd("../data/")
 
 ### reading in FC based clusters for SMARCA4KO
 

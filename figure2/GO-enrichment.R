@@ -19,6 +19,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
  library(DOSE)
 
 
+### setting working directory
+ 
+setwd("../data/")
+ 
 ### Go enrichment
 
 for (element in (1:5)){
@@ -27,7 +31,7 @@ genes <- read.table(paste("genes-cluster",element,".txt",sep=""),header = T)
 
 genes_clean <- genes[!genes$gene == "nan" & !genes$gene == "" & !genes$gene == ".","gene"]
 
-universe <- read.table("data/all-genes-consensus.txt",header = T)
+universe <- read.table("all-genes-consensus.txt",header = T)
 
 universe_clean <- universe[!universe$gene == "nan" & !universe$gene == "" & !universe$gene == ".","gene"]
 

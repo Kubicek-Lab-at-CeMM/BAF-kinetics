@@ -10,7 +10,7 @@ setwd("../data/")
 
 ### setting database
 
-dbPath = "../data/LOLA_db/hg_38/"
+dbPath = "LOLA_db/hg_38/"
 regionDB = loadRegionDB(dbPath)
 
 ### analyses consensus
@@ -28,7 +28,7 @@ for (element in clustervector){
   
   print(element)
   
-  userSets <- readBed(paste("",element,".bed",sep=""))
+  userSets <- readBed(paste("data/",element,".bed",sep=""))
   
   ### Running LOLA
   
