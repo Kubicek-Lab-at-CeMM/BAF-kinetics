@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyverse)
 
 # Importing Proteome Discoverer Protein Abundances. Accession numbers are converted to Row Names
-pd.protein.abundance <- read.csv("~/Documents/Sandra/CC_SKu_93-M790-B01-P9641-P9646-SMARCC1-Norm-20191127_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
+pd.protein.abundance <- read.csv("CC_SKu_93-M790-B01-P9641-P9646-SMARCC1-Norm-20191127_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
 
 # Split Description column to multiple columns
 pd.protein.abundance <- pd.protein.abundance %>% separate(Description, c("Description", "SV"), sep = "\\sSV=", remove = T, convert=T, extra = "merge", fill="right")
@@ -27,7 +27,7 @@ colnames(pd.protein.abundance) <- str_replace_all(colnames(pd.protein.abundance)
 
 ##########
 # Output file
-pdf(file="~/Documents/Sandra/P9641_P9646.pdf", width=8.27, height=11.69)
+pdf(file="P9641_P9646.pdf", width=8.27, height=11.69)
 # Output PDF , font and page dimensions
 par(cex = 0.6);
 par(mar = c(0,4,2,0))
@@ -127,7 +127,7 @@ dev.off()
 row.names(wt.a4.cc1.ip.combined) <- wt.a4.cc1.ip.combined$accession
 wt.a4.cc1.ip.pd.combined <- merge(wt.a4.cc1.ip.combined, pd.protein.abundance, by=0, all.x=T)
 wt.a4.cc1.ip.pd.combined$Row.names <- NULL
-write.table(wt.a4.cc1.ip.pd.combined, file="~/Documents/Sandra/P9641_P9646.csv", row.names = F, sep="\t", quote = F)
+write.table(wt.a4.cc1.ip.pd.combined, file="P9641_P9646.csv", row.names = F, sep="\t", quote = F)
 
 #pd.protein.abundance2 <- merge(pd.protein.ab undance, wt.a4.cc1.ip.chrom, by=0, all.x=T)
 #row.names(pd.protein.abundance2) <- pd.protein.abundance2$Row.names

@@ -2,13 +2,13 @@ LibsRequired = c("plyr", "dplyr", "tidyverse", "ggplot2", "ggrepel", "stringr", 
 
 # Select - WTA4, CC1KOCC2, A4KOCA2, A2KOA4
 # Importing Proteome Discoverer Protein Abundances. Accession numbers are converted to Row Names
-pd.protein.abundance <- read.csv("~/Documents/Sandra/CC_SKu_93-M779-B07-P9510_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
+pd.protein.abundance <- read.csv("CC_SKu_93-M779-B07-P9510_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
 
-pd.protein.abundance <- read.csv("/home/nmarella/Documents/Sandra/CC_SKu_93-CC1KOCC2-201911_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
+pd.protein.abundance <- read.csv("CC_SKu_93-CC1KOCC2-201911_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
 
-pd.protein.abundance <- read.csv("/home/nmarella/Documents/Sandra/CC_SKu_93-A4KOCA2-201911_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
+pd.protein.abundance <- read.csv("CC_SKu_93-A4KOCA2-201911_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
 
-pd.protein.abundance <- read.csv("/home/nmarella/Documents/Sandra/CC_SKu_93-A2KOA4-20191125_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
+pd.protein.abundance <- read.csv("CC_SKu_93-A2KOA4-20191125_Proteins.txt", head=T, sep="\t", dec = ".", na.strings = "NA", stringsAsFactors = F, row.names = "Accession") 
 
 # For all- WTA4, CC1KOCC2, A4KOCA2, A2KOA4
 # Split Description column to multiple columns
@@ -126,10 +126,10 @@ baf.pd$GN[which(duplicated(baf.pd$GN))] <- baf.pd$Row.names[which(duplicated(baf
 row.names(baf.pd) <- baf.pd$GN
 
 # Select - WTA4, CC1KOCC2, A4KOCA2, A2KOA4
-write.table(baf.pd, file="~/Documents/Sandra/P9510_P9537_Nuclear_WTA4_TimeCourse.csv", row.names = F, sep="\t", quote = F)
-write.table(baf.pd, file="~/Documents/Sandra/P9510_P9537_Nuclear_CC1KOCC2.csv", row.names = F, sep="\t", quote = F)
-write.table(baf.pd, file="~/Documents/Sandra/P9510_P9537_Nuclear_A4KOCA2.csv", row.names = F, sep="\t", quote = F)
-write.table(baf.pd, file="~/Documents/Sandra/P9510_P9537_Nuclear_A2KOA4.csv", row.names = F, sep="\t", quote = F)
+write.table(baf.pd, file="P9510_P9537_Nuclear_WTA4_TimeCourse.csv", row.names = F, sep="\t", quote = F)
+write.table(baf.pd, file="P9510_P9537_Nuclear_CC1KOCC2.csv", row.names = F, sep="\t", quote = F)
+write.table(baf.pd, file="P9510_P9537_Nuclear_A4KOCA2.csv", row.names = F, sep="\t", quote = F)
+write.table(baf.pd, file="P9510_P9537_Nuclear_A2KOA4.csv", row.names = F, sep="\t", quote = F)
       
   # For WTA4
   # Heatmap log 2 fold change
@@ -149,7 +149,7 @@ write.table(baf.pd, file="~/Documents/Sandra/P9510_P9537_Nuclear_A2KOA4.csv", ro
   #myBreaks <- c(seq(min(baf.pd.l2fc), 0, length.out=ceiling(paletteLength/2) + 1), seq(max(baf.pd.l2fc)/paletteLength, max(baf.pd.l2fc), length.out=floor(paletteLength/2)))
 
   # Only BAF  
-  pdf(file="~/Documents/Sandra/P9510_P9537_Nuclear_WTA4_TimeCourse_BAF_Heatmap.pdf", width=8.27, height=11.69)
+  pdf(file="P9510_P9537_Nuclear_WTA4_TimeCourse_BAF_Heatmap.pdf", width=8.27, height=11.69)
   par(cex = 0.6)
   par(mar = c(0,4,2,0))
   pheatmap(baf.pd.l2fc, main= "BAF log2 fold change", cluster_cols=F, fontsize_row = 10, show_rownames = T, fontsize=10, labels_col=c("2h","3h", "6h", "24h", "72h"), fontsize_number=10, fontsize_col = 20, cellwidth = 60, color=myColor, breaks=myBreaks, angle_col=45, display_numbers = F)

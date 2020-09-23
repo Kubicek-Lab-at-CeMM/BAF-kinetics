@@ -18,7 +18,7 @@ data <- read.table("FC_p_allclusters_SMARCA4_timecourse_KO_differential_regions.
 
 ### writing N regions
 
-write.table(table(data$cluster)/6,"200220-N-regions-clusters.txt",quote = F,sep = "\t",row.names = F,col.names = T)
+write.table(table(data$cluster)/6,"N-regions-clusters.txt",quote = F,sep = "\t",row.names = F,col.names = T)
 
 ### making boxplots
 
