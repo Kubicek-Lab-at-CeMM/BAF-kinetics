@@ -35,24 +35,13 @@ colnames(homer_known_list[[element]])[c(1:9)] <- paste(colnames(homer_known_list
 
 homer_known_merge <- Reduce(function(x, y) merge(x, y, by = "ID", all=TRUE), homer_known_list)
 
-homer_known_filtered <- homer_known_merge[homer_known_merge$`P-value_cluster1_tc` < 1e-10 | homer_known_merge$`P-value_cluster2_tc` < 1e-10 | homer_known_merge$`P-value_cluster3_tc` < 1e-10 | homer_known_merge$`P-value_cluster1_cluster2_KO` < 1e-10 | homer_known_merge$`P-value_cluster3_KO` < 1e-10,]
-
-write.table(homer_known_filtered,"homer-results-known-5-cluster-filteredp10.txt",quote = F, sep = "\t",row.names = F)
-
-homer_known_filtered <- homer_known_merge[homer_known_merge$`P-value_cluster1_tc` < 1e-20 | homer_known_merge$`P-value_cluster2_tc` < 1e-20 | homer_known_merge$`P-value_cluster3_tc` < 1e-20 | homer_known_merge$`P-value_cluster1_cluster2_KO` < 1e-20 | homer_known_merge$`P-value_cluster3_KO` < 1e-20,]
-
-write.table(homer_known_filtered,"homer-results-known-5-cluster-filteredp20.txt",quote = F, sep = "\t",row.names = F)
-
-homer_known_filtered <- homer_known_merge[homer_known_merge$`P-value_cluster1_tc` < 1e-40 | homer_known_merge$`P-value_cluster2_tc` < 1e-40 | homer_known_merge$`P-value_cluster3_tc` < 1e-40 | homer_known_merge$`P-value_cluster1_cluster2_KO` < 1e-40 | homer_known_merge$`P-value_cluster3_KO` < 1e-40,]
-
-write.table(homer_known_filtered,"homer-results-known-5-cluster-filteredp40.txt",quote = F, sep = "\t",row.names = F)
-
+motifs_to_plot <- homer_known_merge[unique(c(31,252,250,255,361,   364,    162,362,    358,  396)),]
 
 ### making plot table from p values
 
-plot_table <- homer_known_filtered[,c("P-value_cluster1_tc","P-value_cluster2_tc","P-value_cluster3_tc","P-value_cluster1_cluster2_KO","P-value_cluster3_KO","% of Target Sequences with Motif_cluster1_tc","% of Target Sequences with Motif_cluster2_tc","% of Target Sequences with Motif_cluster3_tc","% of Target Sequences with Motif_cluster1_cluster2_KO","% of Target Sequences with Motif_cluster3_KO")]
+plot_table <- motifs_to_plot[,c("P-value_cluster1_tc","P-value_cluster2_tc","P-value_cluster3_tc","P-value_cluster1_cluster2_KO","P-value_cluster3_KO","% of Target Sequences with Motif_cluster1_tc","% of Target Sequences with Motif_cluster2_tc","% of Target Sequences with Motif_cluster3_tc","% of Target Sequences with Motif_cluster1_cluster2_KO","% of Target Sequences with Motif_cluster3_KO")]
 
-row.names(plot_table) <- homer_known_filtered$`Motif Name_cluster1_tc`
+row.names(plot_table) <- motifs_to_plot$`Motif Name_cluster1_tc`
 
 plot_table_log <- plot_table
 
@@ -83,17 +72,21 @@ colnames(plot_table_stacked) <- c("-log10(p_value)","Motif_Ratio")
 
 plot_table_stacked$cluster <- NA
 
-plot_table_stacked$cluster[1:18] <- "cluster1"
+plot_table_stacked$cluster[1:10] <- "cluster1"
 
-plot_table_stacked$cluster[19:36] <- "cluster2"
+plot_table_stacked$cluster[11:20] <- "cluster2"
 
-plot_table_stacked$cluster[37:54] <- "cluster3"
+plot_table_stacked$cluster[21:30] <- "cluster3"
 
-plot_table_stacked$cluster[55:72] <- "cluster4"
+plot_table_stacked$cluster[31:40] <- "cluster4"
 
-plot_table_stacked$cluster[73:90] <- "cluster5"
+plot_table_stacked$cluster[41:50] <- "cluster5"
 
 plot_table_stacked$feature <- rep(row.names(plot_table_log),5)
+
+order_vector <- plot_table_stacked[order(plot_table_stacked$`-log10(p_value)`,decreasing = T),'feature']
+
+plot_table_stacked$feature <- factor(plot_table_stacked$feature, levels = rev(unique(order_vector$feature)))
 
 
 cols <- c("deepskyblue",
@@ -106,6 +99,9 @@ dotplot = ggplot(plot_table_stacked) +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90))
 
-pdf("dotplot-homer-known-SMARCA4-timecourse-KO-clusters-p20.pdf",useDingbats = F,width = 10, height = 5) 
+pdf("dotplot-homer-candidates.pdf",useDingbats = F,width = 10, height = 5) 
 print(dotplot)
 dev.off()
+
+
+
